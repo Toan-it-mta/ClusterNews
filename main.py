@@ -26,15 +26,22 @@ class Pipeline:
 
 
 def test():
+    _result = {}
     pipeline = Pipeline()
     f = open('./data/100k_news_vi.json', 'r', encoding='utf-8')
     data = json.load(f)
     f.close()
     for item in data:
         text = item['content']
+        title = item['title']
         cluster = pipeline.pipeline(text)
-        print('cluster: ', cluster)
+        if cluster not in _result.keys():
+            _result[cluster] = []
+        _result[cluster].append(title)
     # pipeline.embeddingKeyWordExtractor.save_vocab()
+    f = open('./_result_100k_news_vi.json', 'w', encoding='utf-8')
+    json.dump(_result, f, ensure_ascii=False)
+    f.close()
 
 
 if __name__ == "__main__":
