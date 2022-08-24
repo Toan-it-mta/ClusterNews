@@ -1,7 +1,7 @@
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import time
-from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def get_score_similarity(X, Y, alg='entities'):
@@ -12,7 +12,7 @@ def get_score_similarity(X, Y, alg='entities'):
                 count += 1
         return count/len(X)
     else:
-        return euclidean_distances([X], [Y])
+        return cosine_similarity([X], [Y])
 
 
 class Cluster():
@@ -56,6 +56,7 @@ class Cluster():
             if max_score < threshold:
                 self.cluster += 1
                 max_cluster = self.cluster
+                print('Create new clsuter: ', max_cluster)
 
             self.count += 1
             self.embeddings[self.count] = embedding
